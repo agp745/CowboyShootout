@@ -1,9 +1,9 @@
 export default function App() {
-  const socket = new WebSocket("ws://127.0.0.1:8080");
+  const socket = new WebSocket("ws://127.0.0.1:8080/foo");
 
-  socket.addEventListener("open", (e) => {
+  socket.addEventListener("open", () => {
     socket.send("connection established");
-    console.log(`open event\n ${e}`);
+    console.log(`open event`);
   });
   socket.addEventListener("message", (e) => {
     console.log("Message from server: ", e.data);

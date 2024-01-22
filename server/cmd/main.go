@@ -18,7 +18,10 @@ type WSHandler struct{}
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
-	// CheckOrigin:
+	CheckOrigin: func(r *http.Request) bool {
+		fmt.Println(r)
+		return true
+	},
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
