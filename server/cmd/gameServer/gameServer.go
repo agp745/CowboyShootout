@@ -3,6 +3,7 @@ package gameserver
 import (
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"time"
 
@@ -10,7 +11,8 @@ import (
 )
 
 type GameServer struct {
-	Server *http.Server
+	Server  *http.Server
+	peerMap map[net.Addr]Client
 }
 
 type WSHandler struct{}
@@ -32,7 +34,7 @@ var upgrader = websocket.Upgrader{
 func handler(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println(err)
+		log.Println(err, " - handler err")
 		return
 	}
 
@@ -43,12 +45,14 @@ func ReadConn(conn *websocket.Conn) {
 	for {
 		messageType, p, err := conn.ReadMessage()
 		if err != nil {
-			log.Print(err)
+			log.Print(err, " - Conn Read error")
 			continue
 		}
+		log.Printf("(%s) - %s\n", conn.RemoteAddr(), p)
 
-		if err := conn.WriteMessage(messageType, p); err != nil {
-			log.Println(err)
+		resp := []byte("HELLO FROM SERVER")
+		if err := conn.WriteMessage(messageType, resp); err != nil {
+			log.Println(err, " - Conn Write error")
 			continue
 		}
 	}
