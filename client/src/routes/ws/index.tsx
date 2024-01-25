@@ -1,36 +1,18 @@
-import { FileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { FileRoute, Link } from "@tanstack/react-router";
+import { WebsocketTest } from "./-ws";
 
-function WebSocketTest() {
-  useEffect(() => {
-    const socket = new WebSocket("ws://127.0.0.1:8080/foo");
-
-    socket.addEventListener("open", () => {
-      socket.send("connection established");
-      console.log(`open event`);
-    });
-    socket.addEventListener("message", (e) => {
-      console.log("Message from server: ", e.data);
-    });
-    socket.addEventListener("error", (e) => {
-      console.log("WEBSOCKET ERROR", e);
-    });
-
-    return () => {
-      socket.removeEventListener("open", () => {});
-      socket.removeEventListener("message", () => {});
-      socket.removeEventListener("error", () => {});
-    };
-  }, []);
-
+function WSPage() {
   return (
-    <div className="">
-      Hello World!
-      <button>HI</button>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <WebsocketTest />
+      <Button variant="secondary">
+        <Link to="/">Exit Socket</Link>
+      </Button>
     </div>
   );
 }
 
 export const Route = new FileRoute("/ws/").createRoute({
-  component: WebSocketTest,
+  component: WSPage,
 });

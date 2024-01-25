@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "@tanstack/react-query": "^5.17.19",
     "@tanstack/react-router": "^1.9.0",
     "@tanstack/router-devtools": "^1.9.0",
     "axios": "^1.6.5",
@@ -22,6 +24,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.17.20",
     "@tanstack/router-vite-plugin": "^1.8.2",
     "@types/node": "^20.11.5",
     "@types/react": "^18.2.43",
